@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de programação</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main">
+        <section class="forms">
+            <h2>Cadastro da empresa</h2>
+            <form class="forms__form forms__empresa" method="post">
+                <label for="idSocial">Razão Social: </label>
+                <input type="text" name="razaoSocial" id="idSocial">
+    
+                <label for="idFantasia">Nome Fantasia: </label>
+                <input type="text" name="nomeFantasia" id="idFantasia">
+    
+                <label for="idCnpj">CNPJ: </label>
+                <input type="number" name="cnpj" id="idCnpj">
+    
+                <label for="idDataCadastroEmpresa">Data de cadastro: </label>
+                <input type="date" name="dataCadastro" id="idDataCadastroEmpresa">
+    
+                <label for="idEmail">E-mail: </label>
+                <input type="email" name="email" id="idEmail">
+    
+                <label for="idTelefoneEmpresa">Telefone: </label>
+                <input type="number" name="telefoneEmpresa" id="idTelefoneEmpresa">
+
+                <label for="idCelularEmpresa">Celular: </label>
+                <input type="number" name="celularEmpresa" id="idCelularEmpresa">
+    
+                <label for="idContato">Contato: </label>
+                <input type="number" name="contato" id="idContato">
+    
+                <label for="idEnderecoEmpresa">Endereço: </label>
+                <input type="text" name="enderecoEmpresa" id="idEnderecoEmpresa">
+
+                <input type="submit" target=".formsControle" value="Cadastrar">
+            </form>
+        </section>
+
+        <section class="forms">
+            <h2>Cadastro de cliente</h2>
+            <form class="forms__form forms__cliente" method="post">
+                <label for="idNome">Nome: </label>
+                <input type="text" name="nome" id="idNome">
+
+                <label for="idCpf">CPF: </label>
+                <input type="number" name="cpf" id="idCpf">
+
+                <label for="idNascimento">Data de Nascimento: </label>
+                <input type="date" name="nascimento" id="idNascimento">
+
+                <label for="idCadastro">Data de Cadastro: </label>
+                <input type="date" name="cadastro" id="idCadastro">
+
+                <label for="idEmailCliente">E-mail: </label>
+                <input type="email" name="emailCliente" id="idEmailCliente">
+
+                <label for="idTelefoneCliente">Telefone: </label>
+                <input type="number" name="telefoneCliente" id="idTelefoneCliente">
+
+                <label for="idCelularCliente">Celular: </label>
+                <input type="number" name="celularCliente" id="idCelularCliente">
+
+                <label for="idEnderecoCliente">Endereço: </label>
+                <input type="text" name="enderecoCliente" id="idEnderecoCliente">
+
+                <input type="submit" target=".formsControle" value="Cadastrar">
+            </form>
+        </section>
+
+        <section class="forms">
+            <h2>Cadastro de Produtos</h2>
+            <form class="forms__form forms__produtos" method="post">
+                <label for="idNomeProduto">Nome: </label>
+                <input type="text" name="nomeProduto" id="idNomeProduto">
+
+                <label for="idDescricao">Descrição: </label>
+                <input type="text" name="descricao" id="idDescricao">
+
+                <label for="idCode">Código: </label>
+                <input type="number" name="code" id="idCode">
+
+                <label for="idValor">Valor: </label>
+                <input type="number" name="valor" id="idValor">
+
+                <label for="idValorPromocional">Valor Promocional: </label>
+                <input type="number" name="valorPromocional" id="idValorPromocional">
+
+                <label for="idDataInicialPromo">Data Inicial Promoção: </label>
+                <input type="date" name="dataInicialPromo" id="idDataInicialPromo">
+
+                <label for="idDataFinalPromo">Data Final Promoção: </label>
+                <input type="date" name="dataFinalPromo" id="idDataFinalPromo">
+
+                <label for="idDataCadastroProduto">Data Cadastro: </label>
+                <input type="date" name="dataCadastro" id="idDataCadastroProduto">
+
+                <p>Status: </p>
+                <div>
+                    <label for="idAtivo">Ativo: </label>
+                    <input type="radio" name="status" id="idAtivo" checked>
+                    <label for="idInativo">Inativo: </label>
+                    <input type="radio" name="status" id="idInativo">
+                </div>
+
+                <input type="submit" target=".formsControle" value="Cadastrar">
+            </form>
+        </section>
+
+        <section class="forms formsAdicionarEstoque">
+            <h2>Adicionar produtos ao estoque</h2>
+            <p>Nenhum produto no estoque</p>
+        </section>
+
+        <section class="forms formsControle">
+            <h2>Controle de Estoque</h2>
+            <div class="produtosNoEstoque">
+                <p>Nenhum produto no estoque</p>
+            </div>
+        </section>
+
+        <section class="forms">
+            <h2>Cadastro de Vendas</h2>
+            <form class="forms__form forms__venda" method="post">
+                <div class="divEmpresas">
+                    <p>Sem empresas cadastradas</p>
+                </div>
+
+                <div class="divClientes">
+                    <p>Sem clientes cadastrados</p>
+                </div>
+
+                <label for="idDataVenda">Data da Venda: </label>
+                <input type="date" name="dataVenda" id="idDataVenda">
+
+                <div class="divProdutos">
+                    <p>Sem produtos cadastrados</p>
+                </div>
+
+                <div class="divProdutosEmVenda">
+
+                </div>
+
+                <div class="divDesconto">
+
+                </div>
+
+                <div class="divPagamento">
+                    <label for="idPagamento">Pagamento do(s) produto(s) R$: </label>
+                    <input type="number" name="pagamento" id="idPagamento" required min="0">
+                </div>
+
+                <div class="divConfirmar">
+                    <input type="submit" value="Pagar">
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <div class="content__json">
+
+            </div>
+
+            <button class="confirmar">Confirmar</button>
+            <button class="cancelar">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- <script src="./scripts/cadastroVendas.js"></script> -->
+    <script src="./scripts/cadastroEmpresa.js" defer type="module"></script>
+    <script src="./scripts/cadastroCliente.js" defer type="module"></script>
+    <script src="./scripts/adicionarAoEstoque.js" defer type="module"></script>
+    <script src="./scripts/cadastroProdutos.js" defer type="module"></script>
+    <script src="./store/produtosEstoque.js" defer type="module"></script>
+    <script src="./scripts/controleEstoque.js" defer type="module"></script>
+    <script src="./scripts/cadastroVendas.js" defer type="module"></script>
+</body>
+</html>
