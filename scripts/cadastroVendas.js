@@ -68,7 +68,7 @@ export function exibirProdutos(Produtos) {
         </select>
 
         <label for="idProdutoQuantidadeVenda">Quantidade: </label>
-        <input type="number" name="produtoQuantidadeVenda" id="idProdutoQuantidadeVenda" required>
+        <input type="number" name="produtoQuantidadeVenda" id="idProdutoQuantidadeVenda" required min="1">
         <input type="submit" target=".formsControle" value="Cadastrar">
     `
 
@@ -134,13 +134,13 @@ function exibirPromo(ProdutosEmVenda) {
             totalSemDeconto += (Number(produto.valor) * Number(produto.produtoQuantidade));
         })
     
-    const descontoPorcentagem = ((totalSemDeconto - totalDesconto) / totalSemDeconto * 100).toFixed(2);
+    const descontoPorcentagem = totalDesconto === 0 ? 0 : ((totalSemDeconto - totalDesconto) / totalSemDeconto * 100).toFixed(2)
     ValorProdutos = { descontoPorcentagem, totalDesconto, totalSemDeconto }
 
     divDesconto.innerHTML = `
         <p>Deconto: ${ValorProdutos.descontoPorcentagem}%</p>
         <p>Total da Venda(Sem desconto): R$${ValorProdutos.totalSemDeconto}</p>
-        <p>Total da Venda(Com desconto): R$${ValorProdutos.totalDesconto}</p>
+        ${ValorProdutos.totalDesconto === 0 ? "" : `<p>Total da Venda(Com desconto): R$${ValorProdutos.totalDesconto}</p>`}
     `
 }
 
@@ -148,13 +148,15 @@ function calcularPagamento() {
     const pagamento = document.querySelector("#idPagamento").value;
     let total = 0;
 
+    console.log(ProdutosEmVenda)
     Object.values(ProdutosEmVenda).map((produto) => {
-        if (Number(produto.valorPromocional === 0)) {
+        if (Number(produto.valorPromocional === 0 || produto.valorPromocional == '')) {
             total += Number(produto.valor) * Number(produto.produtoQuantidade);
         } else {
             total += Number(produto.valorPromocional) * Number(produto.produtoQuantidade);
         }
     })
+    console.log(total)
 
     if (pagamento < total || !pagamento) {
         window.alert("Pagamento insuficiente!")
@@ -193,7 +195,8 @@ function atualizarEstoque() {
                 return;
             }
 
-            produto.quantidadeEstoque = Number(produto.quantidadeEstoque) - Number(produtoVenda.produtoQuantidade)
+            produto.quantidadeEstoque = Number(produto.quantidadeEstoque) - Number(produtoVenda.produtoQuantidade);
+            produto.quantidadeVendida = Number(produto.quantidadeVendida) + Number(produtoVenda.produtoQuantidade);
         })
 
         controleEstoque(ProdutosEstoque)
@@ -226,7 +229,7 @@ function openPopup(total) {
         <h3>Empresa: </h3>
         <ul class="empresa-popup">
             <li>Nome fantasia: ${Empresas[empresa].nomeFantasia}</li>
-            <li>Razao social${Empresas[empresa].razaoSocial}</li>
+            <li>Razao social: ${Empresas[empresa].razaoSocial}</li>
             <li>CNPJ: ${Empresas[empresa].cnpj}</li>
         </ul>
 
@@ -244,7 +247,7 @@ function openPopup(total) {
                 <h3>${produto.produtoSelecionado}</h3>
                 <ul class="produtos-popup">
                     <li>Quantidade: ${produto.produtoQuantidade}</li>
-                    <li>Valor: ${produto.valor}</li>
+                    <li>Valor: R$${produto.valor}</li>
                     <li>Valor Promocional: ${produto.valorPromocional == 0 ? "sem valor promocional" : produto.valorPromocional}</li>
                 </ul>
             `).join('')
@@ -253,10 +256,10 @@ function openPopup(total) {
         <h3>Valores: </h3>
         <ul class="produtos-popup">
             <li>Desconto: ${ValorProdutos.descontoPorcentagem}%</li>
-            <li>Total sem desconto: ${ValorProdutos.totalSemDeconto}</li>
-            <li>Total com desconto: ${ValorProdutos.totalDesconto}</li>
-            <li>Valor pago: ${pagamento}</li>
-            <li>Troco: ${pagamento - total}</li>
+            <li>Total sem desconto: R$${ValorProdutos.totalSemDeconto}</li>
+            ${ValorProdutos.totalDesconto === 0 ? "" : `<li>Total com desconto: R$${ValorProdutos.totalDesconto}</li>`}
+            <li>Valor pago: R$${pagamento}</li>
+            <li>Troco: R$${pagamento - total}</li>
         </ul>
     `
 

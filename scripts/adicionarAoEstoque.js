@@ -23,7 +23,7 @@ function adicionarAoEstoque(ProdutosEstoque) {
         </select>
 
         <label for="idProdutoQuantidade">Quantidade: </label>
-        <input type="number" name="produtoQuantidade" id="idProdutoQuantidade" required>
+        <input type="number" name="produtoQuantidade" id="idProdutoQuantidade" required min="1">
         <input type="submit" target=".formsControle" value="Cadastrar">
     </form>
     `;
