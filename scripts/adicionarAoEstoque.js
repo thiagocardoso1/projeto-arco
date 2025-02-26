@@ -11,7 +11,8 @@ function adicionarAoEstoque(ProdutosEstoque) {
 
     formSection.innerHTML = `
     <h2>Adicionar produtos ao estoque</h2>
-    <form id="formEstoque">
+    <i class="bi bi-arrow-down-circle arrowEstoque"></i>
+    <form class="forms__form" id="formEstoque">
         <label for="idProduto">Selecione um produto</label>
         <select name="produto" id="idProduto">
             <optgroup label="Produtos disponíveis" class="produtosDisponiveis">

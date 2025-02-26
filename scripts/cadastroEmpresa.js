@@ -20,9 +20,8 @@ formEmpresa.addEventListener("submit", function (event) {
         window.alert("Empresa com esse cnpj já cadastrada!")
         return;
     } else {
-        let id = `empresa${Object.keys(Empresas).length + 1}`;
-        Empresas[id] = {
-            ...Empresas[id],
+        Empresas[nomeFantasia] = {
+            ...Empresas[nomeFantasia],
             razaoSocial, nomeFantasia, cnpj, dataCadastro, email, telefone, celular, contato, endereco
         }
 

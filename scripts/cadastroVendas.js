@@ -1,7 +1,10 @@
 import ProdutosEstoque from "../store/produtosEstoque.js";
 import controleEstoque from "./controleEstoque.js";
+import Empresas from "../store/empresasCadastradas.js";
+import Clientes from "../store/clientesCadastrados.js";
 
 let ProdutosEmVenda = {};
+let ValorProdutos = {};
 
 const divEmpresas = document.querySelector(".divEmpresas");
 const divClientes = document.querySelector(".divClientes");
@@ -72,7 +75,7 @@ export function exibirProdutos(Produtos) {
     divProdutos.innerHTML = "";
     divProdutos.appendChild(form);
 
-    setTimeout(produtosVenda(Produtos), 0);
+    setTimeout(() => produtosVenda(Produtos), 0);
 }
 
 function produtosVenda(Produtos) {
@@ -130,14 +133,15 @@ function exibirPromo(ProdutosEmVenda) {
             totalDesconto += (Number(produto.valorPromocional) * Number(produto.produtoQuantidade));
             totalSemDeconto += (Number(produto.valor) * Number(produto.produtoQuantidade));
         })
+    
+    const descontoPorcentagem = ((totalSemDeconto - totalDesconto) / totalSemDeconto * 100).toFixed(2);
+    ValorProdutos = { descontoPorcentagem, totalDesconto, totalSemDeconto }
 
     divDesconto.innerHTML = `
-        <p>Deconto: ${((totalSemDeconto - totalDesconto) / totalSemDeconto * 100).toFixed(2)}%</p>
-        <p>Total da Venda(Sem desconto): R$${(totalSemDeconto).toFixed(2)}</p>
-        <p>Total da Venda(Com desconto): R$${(totalDesconto).toFixed(2)}</p>
+        <p>Deconto: ${ValorProdutos.descontoPorcentagem}%</p>
+        <p>Total da Venda(Sem desconto): R$${ValorProdutos.totalSemDeconto}</p>
+        <p>Total da Venda(Com desconto): R$${ValorProdutos.totalDesconto}</p>
     `
-
-    console.log(ProdutosEmVenda)
 }
 
 function calcularPagamento() {
@@ -145,10 +149,10 @@ function calcularPagamento() {
     let total = 0;
 
     Object.values(ProdutosEmVenda).map((produto) => {
-        if (Number(produto.valorPromocional == 0)) {
-            total += Number(produto.valor);
+        if (Number(produto.valorPromocional === 0)) {
+            total += Number(produto.valor) * Number(produto.produtoQuantidade);
         } else {
-            total += Number(produto.valorPromocional);
+            total += Number(produto.valorPromocional) * Number(produto.produtoQuantidade);
         }
     })
 
@@ -162,6 +166,7 @@ function calcularPagamento() {
 
 function atualizarEstoque() {
     let produtosInsuficientes = [];
+    console.log(ProdutosEmVenda)
     
     Object.values(ProdutosEmVenda).forEach((produtoVenda) => {
         const produtoEstoque = Object.values(ProdutosEstoque).find(
@@ -182,6 +187,11 @@ function atualizarEstoque() {
             const produtoVenda = Object.values(ProdutosEmVenda).find(
                 (produtoVenda) => produtoVenda.produtoSelecionado === produto.nome
             )
+
+            if (!produtoVenda) {
+                console.error(`Produto ${produto.nome} não encontrado em ProdutosEmVenda.`);
+                return;
+            }
 
             produto.quantidadeEstoque = Number(produto.quantidadeEstoque) - Number(produtoVenda.produtoQuantidade)
         })
@@ -213,9 +223,21 @@ function openPopup(total) {
     });
 
     jsonContent.innerHTML = `
-        <span>Empresa: ${empresa}</span>
-        <span>Cliente: ${cliente}</span>
-        <span>Data da Venda: ${dataVenda}</span>
+        <h3>Empresa: </h3>
+        <ul class="empresa-popup">
+            <li>Nome fantasia: ${Empresas[empresa].nomeFantasia}</li>
+            <li>Razao social${Empresas[empresa].razaoSocial}</li>
+            <li>CNPJ: ${Empresas[empresa].cnpj}</li>
+        </ul>
+
+        <h3>Cliente: </h3>
+        <ul class="cliente-popup">
+            <li>Nome: ${Clientes[cliente].nome}</li>
+            <li>CPF: ${Clientes[cliente].cpf}</li>
+        </ul>
+
+        <h3>Data da Venda: </h3>
+        <p>${dataVenda}</p>
 
         ${Object.values(ProdutosEmVenda)
             .map(produto => `
@@ -227,13 +249,26 @@ function openPopup(total) {
                 </ul>
             `).join('')
         }
-
-        <span>Troco: ${pagamento - total}</span>
+        
+        <h3>Valores: </h3>
+        <ul class="produtos-popup">
+            <li>Desconto: ${ValorProdutos.descontoPorcentagem}%</li>
+            <li>Total sem desconto: ${ValorProdutos.totalSemDeconto}</li>
+            <li>Total com desconto: ${ValorProdutos.totalDesconto}</li>
+            <li>Valor pago: ${pagamento}</li>
+            <li>Troco: ${pagamento - total}</li>
+        </ul>
     `
 
+    confirmar.removeEventListener("click", atualizarEstoque);
     confirmar.addEventListener("click", function() {
+        if (Object.keys(ProdutosEmVenda).length === 0) {
+            console.error("Nenhum produto na venda. Estoque não será atualizado.");
+            return;
+        }
+
         atualizarEstoque();
-        ProdutosEmVenda = {}
+        ProdutosEmVenda = {};
 
         document.querySelector(".divProdutosEmVenda").innerHTML = ``
         document.querySelector(".divDesconto").innerHTML = ``
@@ -242,6 +277,7 @@ function openPopup(total) {
         console.log(ProdutosEmVenda);
     })
 
+    cancelar.removeEventListener("click", atualizarEstoque);
     cancelar.addEventListener("click", function() {
         ProdutosEmVenda = {}
 

@@ -18,10 +18,8 @@ formCLiente.addEventListener("submit", function (event) {
     if (Object.values(Clientes).some(cliente => cliente.cpf === cpf)) {
         window.alert("CPF já cadastrado no sistema");
     } else {
-        let id = `cliente${Object.keys(Clientes).length + 1}`
-
-        Clientes[id] = {
-            ...Clientes[id],
+        Clientes[nome] = {
+            ...Clientes[nome],
             nome, cpf, nascimento, cadastro, email, telefone, celular, endereco
         }
 
