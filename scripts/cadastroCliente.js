@@ -23,6 +23,19 @@ formCLiente.addEventListener("submit", function (event) {
             nome, cpf, nascimento, cadastro, email, telefone, celular, endereco
         }
 
+        limpar()
         exibirClientes(Clientes);
+        window.alert("Cliente cadastrado");
     }
 })
+
+function limpar() {
+    document.querySelector("#idNome").value = null;
+    document.querySelector("#idCpf").value =  null;
+    document.querySelector("#idNascimento").value =   null;
+    document.querySelector("#idCadastro").value = null;
+    document.querySelector("#idEmailCliente").value = null;
+    document.querySelector("#idTelefoneCliente").value =  null;
+    document.querySelector("#idCelularCliente").value =   null;
+    document.querySelector("#idEnderecoCliente").value =  null;
+}

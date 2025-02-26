@@ -25,6 +25,21 @@ formEmpresa.addEventListener("submit", function (event) {
             razaoSocial, nomeFantasia, cnpj, dataCadastro, email, telefone, celular, contato, endereco
         }
 
+        limpar();
         exibirEmpresas(Empresas);
+        window.alert("Empresa cadastrada")
     }
 })
+
+function limpar() {
+    console.log("deu certo")
+    document.querySelector("#idSocial").value = null;
+    document.querySelector("#idFantasia").value = null;
+    document.querySelector("#idCnpj").value = null;
+    document.querySelector("#idDataCadastroEmpresa").value = null;
+    document.querySelector("#idEmail").value = null;
+    document.querySelector("#idTelefoneEmpresa").value = null;
+    document.querySelector("#idCelularEmpresa").value = null;
+    document.querySelector("#idContato").value = null;
+    document.querySelector("#idEnderecoEmpresa").value = null;
+}

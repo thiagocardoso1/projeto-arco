@@ -42,5 +42,19 @@ formProdutos.addEventListener("submit", function (event) {
 
         adicionarAoEstoque(ProdutosEstoque);
         exibirProdutos(ProdutosEstoque);
+        limpar();
+
+        window.alert("Produto cadastrado");
     }
 })
+
+function limpar() {
+    document.querySelector("#idNomeProduto").value = null;
+    document.querySelector("#idDescricao").value = null;
+    document.querySelector("#idCode").value = null;
+    document.querySelector("#idValor").value = null;
+    document.querySelector("#idValorPromocional").value = null;
+    document.querySelector("#idDataInicialPromo").value = null;
+    document.querySelector("#idDataFinalPromo").value = null;
+    document.querySelector("#idDataCadastroProduto").value = null;
+}
